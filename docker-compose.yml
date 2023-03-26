@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+  nginx:
+    build: ".docker/local/nginx"
+    container_name: kanri-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./public:/app/public
+      - ./.docker/local/nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - app
+
+  app:
+    build: ".docker/local/php"
+    container_name: kanri-app
+    working_dir: /app
+    volumes:
+      - ".:/app"
+      - "./.docker/local/php/php.ini:/usr/local/etc/php/conf.d/php.ini"
+    ports:
+      - "5173:5173"
+    environment:
+      - USER_NAME
+      - USER_ID
+      - GROUP_NAME
+      - GROUP_ID
+    depends_on:
+      - mysql
+
+  mysql:
+    build: ".docker/local/mysql"
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./storage/mysql:/var/lib/mysql"
+    environment:
+      MYSQL_DATABASE: kanri
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+    container_name: kanri-mysql
