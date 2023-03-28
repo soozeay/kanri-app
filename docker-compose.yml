@@ -38,7 +38,7 @@ services:
       - "./storage/mysql:/var/lib/mysql"
     environment:
       MYSQL_DATABASE: kanri
-      MYSQL_USER: admin
+      MYSQL_USER: kan
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: password
     container_name: kanri-mysql
