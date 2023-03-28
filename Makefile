@@ -13,7 +13,7 @@ stop:
 	docker-compose stop
 
 down:
-	docker-compose down
+	docker-compose down -v
 
 ps:
 	docker ps
@@ -25,7 +25,7 @@ restart:
 	docker-compose restart
 
 mysql:
-	docker exec -it kanri-mysql /bin/bash
+	docker exec -it kanri-mysql
 
 fresh:
 	docker exec -it kanri-app php artisan migrate:fresh --seed
